@@ -1,0 +1,60 @@
+{
+    "name": "prova",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "animation": "*",
+        "settings-blocks": "github:microsoft/pxt-settings-blocks#v1.0.0",
+        "controller": "*",
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.1",
+        "Makey Makey Keymappings": "github:joylabz/makeymakey-makecode-arcade-extension#1.0.3",
+        "arcade-text": "github:microsoft/arcade-text#v1.3.0",
+        "multiplayer": "*",
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.2"
+    },
+    "files": [
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "tilemap.g.jres",
+        "tilemap.g.ts",
+        "images.g.jres",
+        "images.g.ts",
+        "player.ts",
+        "grass.ts",
+        "map.ts",
+        "fightInterface.ts",
+        "main.py",
+        "utility.ts",
+        "setting.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "1.12.21",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "tsprj",
+    "palette": [
+        "#000000",
+        "#FFFFFF",
+        "#FF0000",
+        "#FF007D",
+        "#FF7a00",
+        "#e5FF00",
+        "#2D9F00",
+        "#00FF72",
+        "#0034FF",
+        "#86552D",
+        "#C600FF",
+        "#636363",
+        "#7400DB",
+        "#00EFFF",
+        "#AD0000",
+        "#000000"
+    ]
+}
