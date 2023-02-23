@@ -310,7 +310,19 @@ namespace Player{
       
       export function startGame_player(): void {
             let player = sprites.create(Player.anim.get(Player.direction)[0], SpriteKind.Player);
-            Utility.activateSprite(player);
+              Utility.activateSprite(player);
+              forever(
+                ()=>{
+                    if (!controller.left.isPressed() && 
+                        !controller.up.isPressed() &&
+                        !controller.right.isPressed() &&
+                        !controller.down.isPressed()){
+                        animation.stopAnimation(animation.AnimationTypes.All, player);
+                        player.setImage(Player.anim.get(Player.direction)[0]);
+                        playerInteraction.isMoving = false;
+                    }
+                }
+            )
       }
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, Player.movmentFactory(Player.anim.get(Player.DIRECTION.left),player, Player.DIRECTION.left));
@@ -319,15 +331,3 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, Player.movmentFactory(Pla
 controller.right.onEvent(ControllerButtonEvent.Pressed, Player.movmentFactory(Player.anim.get(Player.DIRECTION.right),player, Player.DIRECTION.right));
 // setup for camera and movment
 Player.startGame_player();
-forever(
-    ()=>{
-        if (!controller.left.isPressed() && 
-            !controller.up.isPressed() &&
-            !controller.right.isPressed() &&
-            !controller.down.isPressed()){
-            animation.stopAnimation(animation.AnimationTypes.All, player);
-            player.setImage(Player.anim.get(Player.direction)[0]);
-            playerInteraction.isMoving = false;
-        }
-    }
-)
