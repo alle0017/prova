@@ -142,4 +142,99 @@ namespace Utility{
         controller.moveSprite(sprite);
         scene.cameraFollowSprite(sprite);
     }
+    export class Hash<T>{
+        length: number;
+        private cells: number;
+        private table: T[];
+        private names: string[];
+        private currentNofDig: number;
+        private readonly ALF = 26;
+        constructor() { 
+            this.length = 0;
+            this.currentNofDig = 1;
+            this.setCellsNumber();
+            this.names = [];
+            this.table = [];
+        }
+        private setCellsNumber(): void {
+            this.cells = this.ALF ** this.currentNofDig;
+        }
+        private resize() {
+            this.currentNofDig++;
+            this.setCellsNumber();
+            let str: string[] = [];
+            let val: T[] = [];
+            for(let i = 0; i < this.names.length; i++){
+                str[i] = this.names[i];
+                val[i] = this.table[i];
+            }
+            this.table = [];
+            this.names = [];
+            for (let i = 0; i < this.cells; i++){
+                if (str[i])
+                    this.set(str[i], val[i]);
+            }
+        }
+        private hashCode(name: string) {
+            let index = 0;
+            for (let i = 0; i < name.length && i < this.currentNofDig; i++){
+                  let tmp = name.charCodeAt(i) - 'a'.charCodeAt(0);
+                  index += (this.ALF**(i))*tmp;
+            }
+            console.log(index+' '+name);
+            return index;
+        }
+        set(name: string, elem: T): boolean {
+            name = name.toLowerCase()
+            if (!this.valid(name)) return false;
+            let index = this.hashCode(name);
+            if (this.names[index] && this.names[index] !== name) {
+                this.resize();
+                this.set(name, elem);
+            } else {
+                this.names[index] = name;
+                this.table[index] = elem;
+                this.length++;
+            }
+            return true;
+        }
+        get(name: string) {
+            name = name.toLowerCase()
+            if (!this.valid(name)) return null;
+            let index = this.hashCode(name);
+            return this.table[index];
+        } 
+        delete(name: string) {
+            name = name.toLowerCase()
+            if(!this.valid(name)) return false;
+            let index = this.hashCode(name);
+            this.names[index] = '';
+            this.length--;
+            return true;
+        }
+        getKey(elem: T): string {
+            let flag = -1;
+            for (let i = 0; flag < 0 && i < this.cells; i++){
+                if (this.names[i] && this.table[i] === elem)
+                    flag = i;
+            }
+            return this.names[flag];
+        }
+        getAllDatas(): T[]{
+            let data: T[] = [];
+            for(let i = 0; i < this.cells && data.length < this.length; i++){
+                if(this.names[i]){
+                    data.push(this.table[i]);
+                }
+            }
+            return data;
+        }
+        private valid(name: string): boolean{
+            for(let i = 0; i < name.length; i++){
+                if(name[i] < 'a' || name > 'z')
+                    return false;
+            }
+            return true;
+        }
+    }
 }
