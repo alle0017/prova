@@ -24,15 +24,14 @@ f 6 6 6 6 7 6 6 6 6 7 6 6 6 6 f
     else isGrassAlreadyMoving = true;
     sprites.destroyAllSpritesOfKind(grassKind);
     let grassParticels = sprites.create(General.grassParticels,grassKind);
-    switch(animationFrames.direction){
-            case DOWN: vet[1] = -1;
-                break;
-            case UP: vet[1] = 1;
-                break;
-            case LEFT: vet[0] = 1;
-                break;
-            case RIGHT: vet[0] = -1;
-                break;
+    if (Player.direction == Player.DIRECTION.down){
+        vet[1] = -1;
+    } else if (Player.direction == Player.DIRECTION.up){
+        vet[1] = 1;
+    } else if (Player.direction == Player.DIRECTION.left) {
+        vet[0] = 1;
+    }else{
+        vet[0] = -1;
     }
     grassParticels.x = player.x + vet[0]*MOD;
     grassParticels.y = player.y + vet[1]*MOD; 

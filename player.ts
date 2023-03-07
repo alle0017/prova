@@ -11,7 +11,8 @@ const playerInteraction = {
 };
 namespace Player{
       export let anim = new Utility.Hash<Image[]>();
-      anim.set('up', [img`
+      anim.set('up', [
+                img`
         . . . . f f f f . . . . . 
         . . f f c c c c f f . . . 
         . f f c c c c c c f f . . 
@@ -291,15 +292,15 @@ namespace Player{
         . . . . . . f f f . . . . 
                 `
         ]);
-      export enum DIRECTION{
-                right = 'right',
-                left = 'left',
-                up = 'up',
-                down = 'down'
+      export const DIRECTION = {
+                right : 'right',
+                left : 'left',
+                up : 'up',
+                down : 'down'
       };
       export let direction = DIRECTION.down;
       export const ANIMATION_TIME = 50;
-      export function movmentFactory(frames: Image[], character: Sprite, dir: DIRECTION) {
+      export function movmentFactory(frames: Image[], character: Sprite, dir: string) {
                 return () => {
                         if (playerInteraction.menuOpen) return;
                         animation.runImageAnimation(character, frames, ANIMATION_TIME, true);
@@ -310,6 +311,19 @@ namespace Player{
       
       export function startGame_player(): void {
             let player = sprites.create(Player.anim.get(Player.direction)[0], SpriteKind.Player);
+            Utility.activateSprite(player);
+            forever(
+              () => {
+                  if (!controller.left.isPressed() &&
+                      !controller.up.isPressed() &&
+                      !controller.right.isPressed() &&
+                      !controller.down.isPressed()) {
+                      animation.stopAnimation(animation.AnimationTypes.All, player);
+                      player.setImage(Player.anim.get(Player.direction)[0]);
+                      playerInteraction.isMoving = false;
+                  }
+              }
+          )
               Utility.activateSprite(player);
               forever(
                 ()=>{
@@ -331,3 +345,4 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, Player.movmentFactory(Pla
 controller.right.onEvent(ControllerButtonEvent.Pressed, Player.movmentFactory(Player.anim.get(Player.DIRECTION.right),player, Player.DIRECTION.right));
 // setup for camera and movment
 Player.startGame_player();
+

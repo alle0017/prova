@@ -12,8 +12,10 @@ function setWallToAllTiles(img: Image) {
 //  set rocks as walls
 function setMapOnStart() {
     scene.setBackgroundColor(7)
-    tiles.setCurrentTilemap(tilemap`level1`)
-    /*setWallToAllTiles(img`
+    tiles.setCurrentTilemap(tilemap`
+        level
+    `)
+    setWallToAllTiles(img`
         . . . . . . f f f f . . . . . .
         . . . . . f 5 5 5 5 f . . . . .
         . . . . f 5 7 5 5 7 5 f . . . .
@@ -49,7 +51,7 @@ function setMapOnStart() {
                 c c c c c c c c c b b b b c c . 
                 . c c c c b b b b b b b c c . . 
                 . . . . c c c c c c c c . . . .
-    `)*/
+    `)
 }
 
 setMapOnStart()
